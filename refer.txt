@@ -1,0 +1,114 @@
+   15 - D3 Update Pattern
+
+    //! demonstration 1
+    // graph.append('rect');
+    // graph.append('rect');
+    // graph.append('rect');
+
+    //! demonstration 2
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+    graph.append('rect');
+
+    //! during data join, it will join to the above 3 elements first of all because they already exist in the DOM and the remaining 3 objects are going to be joined to the virtual elements inside the enter selection.
+
+    //! <empty slot>    :- not in the current selection
+    //! ENTER SELECTION :- data > DOM elements
+    //! EXIT SELECTION  :- data < DOM elements
+
+
+
+
+  const rects = graph.selectAll('rect').data(data);
+  console.log(rects);
+
+
+/**
+     * Before appending rects
+     *
+     * {…}
+     _enter: Array [ (6) […] ]  <- Selection of virtual elements that still need to enter the DOM
+     ​
+     _exit: Array [ [] ]        <- Selection of elements which need to exit the DOM (eg: if we have 10 rect elements in the DOM and 5 data objects inside the
+                                   data array, then 5 of the rects already in the DOM would need to exit the DOM because we only have 5 of those objects to join to).
+
+     _groups: Array [ (6) […] ] <- Represents all the elements currently showing on the page
+     ​
+     _parents: Array [ g ]
+     ​
+     <prototype>: Object { constructor: Selection(groups, parents), select: selection_select(select), selectAll: selection_selectAll(select), … }
+     index.js:46:13
+     *  */
+
+    //! demonstration 1
+    //? 3 rects and 6 data objects
+    /**
+     * After appending 3 rects
+      * {…}
+        _enter: (1) […]
+              0: Array(6) [ <3 empty slots>, {…}, {…}, … ] <- 3 empty slots because we already have 3 rects in the DOM, but it still has 3
+                                                              virtual elements inside the enter selection and these are the elements that still need to be appended to the DOM.
+              length: 1
+              <prototype>: Array []
+        _exit: (1) […]
+              0: Array(3) [ <3 empty slots> ]              <- we have 3 on the page but they don't need to exit (because there is no surplus DOM elements)
+              length: 1
+              <prototype>: Array []
+        _groups: (1) […]
+              0: Array(6) [ rect, rect, rect, … ]          <- 3 showing on the page and its also showing the 3 empty slots which still need to be entered
+              length: 1
+              <prototype>: Array []
+        _parents: Array [ g ]
+        <prototype>: Object { constructor: Selection(groups, parents), select: selection_select(select), selectAll: selection_selectAll(select), … }
+        index.js:53:13
+      */
+
+    //! demonstration 2
+    //? 8 rects and 6 data objects
+    /**
+     *
+     * {…}
+        _enter: (1) […]
+             0: Array(6) [ <6 empty slots> ]                        <- no virtual elements as all of the data is mapped to the DOM rects (no deficiency of DOM elements)
+             length: 1
+             <prototype>: Array []
+        _exit: (1) […]
+             0: Array(8) [ <6 empty slots>, rect, rect ]            <- 6 empty slots, these are the 6 rects in the DOM that we will use and we will bind data to,
+                                                                       they don't need to exit. But the other 2 extra rects, these do need to exit the DOM (use exit selection to remove surplus elements from the DOM).
+             length: 1
+            <prototype>: Array []
+        _groups: (1) […]
+             0: Array(6) [ rect, rect, rect, … ]
+             length: 1
+        <prototype>: Array []
+        _parents: Array [ g ]
+        <prototype>: Object { constructor: Selection(groups, parents), select: selection_select(select), selectAll: selection_selectAll(select), … }
+        index.js:63:13
+     */
+
+
+Update-Pattern
+
+const update = (data) => {
+
+  // 1. update scales (domains) if they rely on our data
+  y.domain([0, d3.max(data, d => d.orders)]);
+
+  // 2. join updated data to elements
+  const rects = graph.selectAll('rect').data(data);
+
+  // 3. remove unwanted (if any) shapes using the exit selection
+  rects().exit().remove();
+
+  // 4. update current shapes in the DOM
+  rects.attr(...etc);
+
+  // 5. append the enter selection to the DOM
+  rects.enter().append('rect').attr(...etc);
+
+}

@@ -1,0 +1,138 @@
+1>>  Creating SVG using HTML
+
+[[
+    <svg width="600" height="600">
+      <rect x="300" y="100" fill="blue" width="100" height="200"></rect>
+      <circle
+        cx="200"
+        cy="200"
+        r="50"
+        fill="pink"
+        stroke="red"
+        stroke-width="2"
+      ></circle>
+      <line
+        x1="100"
+        y1="100"
+        x2="120"
+        y2="300"
+        stroke="grey"
+        stroke-width="3"
+      ></line>
+      <path d="M 150 50 L 75 200 L 225 200 Z" fill="orange"></path>
+      https://developer.mozilla.org/en-US/docs/Web/CSS/Tools/Cubic_Bezier_Generator
+      d="M 150 50 L 75 200 L 225 200 C [[225 200]]<-- {start position of the curve} [[150 150]]<-- {end points of our control stick}  [[150 50]]<-- {end position of the curve}"
+      <path
+        d="M 150 50 L 75 200 L 225 200 C 225 200 150 150 150 50"
+        fill="orange"
+      ></path>
+      Control stick simulation
+      <circle cx="150" cy="150" r="5" fill="grey"></circle>
+      <line x1="225" y1="200" x2="150" y2="150" stroke="grey"></line>
+    </svg>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+2>> Basics of D3
+
+[[
+    <div class="canvas"></div>
+    <script src="https://d3js.org/d3.v5.js"></script>
+    <script src="basics.js"></script>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+3>> Joining Data to an element
+
+[[
+    <div class="canvas">
+      <svg width="600" height="600">
+        <rect></rect>
+      </svg>
+    </div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+4>> Joining Data to multiple elements
+
+[[
+    <div class="canvas">
+      <svg width="600" height="600">
+        <rect></rect>
+        <rect></rect>
+        <rect></rect>
+      </svg>
+    </div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+5>> Enter selection
+
+[[
+    <div class="canvas">
+      <svg width="600" height="600">
+        <rect></rect>
+      </svg>
+    </div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+6>> External Data
+
+[[
+    <div class="canvas">
+      <svg width="600" height="600"></svg>
+    </div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+7>> Linear scale, 8>> Band scale, 9>> min,max,extent
+
+[[
+    <div class="canvas">
+      <svg width="600" height="600">
+        <rect></rect>
+      </svg>
+    </div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+10>> Creating a bar chart ( groups and margin ), 11>> Axes, 12>> Inverting bars, 13>> Format tick values
+
+[[
+    <div class="canvas"></div>
+]]
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+14>> Firebase DB, 15>> D3 Update pattern, 16>> Transitions
+
+[[
+  <div class="canvas"></div>
+    <!--! This is fetching the entire firebase library, which includes hosting, storage, authentication etc -->
+    <!-- To fetch only the fire store  -->
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.16.0/firebase-firestore.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: '***',
+        authDomain: '***',
+        databaseURL: '***',
+        projectId: '***',
+        storageBucket: '***',
+        messagingSenderId: '***',
+        appId: '***',
+        measurementId: '***',
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      db.settings({ timestampsInSnapshots: true });
+    </script>
+]]
